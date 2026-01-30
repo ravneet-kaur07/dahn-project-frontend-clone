@@ -3,6 +3,7 @@ import { useState } from "react";
 import { loginUser } from "@/api/api";
 import { loginSchema } from "@/validations/loginSchema";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Register(){
     const [email, setEmail]= useState("");
@@ -10,6 +11,7 @@ export default function Register(){
     const [errors, setErrors]= useState({})
     const [successMsg, setSuccessMsg]= useState("");
     const [errorMsg, setErrorMsg]= useState("");
+    const router= useRouter();
 
     const handleSubmit= async(e)=>{
         e.preventDefault();
@@ -27,6 +29,7 @@ export default function Register(){
         try{
             const res = await loginUser(result.data);
             setSuccessMsg(res.message||"Login Successful!!!!");
+            router.push('/dashboard');
             setEmail("");
             setPassword("");
             console.log("Success:", res);
